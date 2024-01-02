@@ -1,0 +1,214 @@
+{
+    "name": "PlayControls",
+    "maps": [
+        {
+            "name": "PlayActions",
+            "id": "abe8b449-cb16-40ac-9c29-1ef16da61c83",
+            "actions": [
+                {
+                    "name": "RobotServe",
+                    "type": "Button",
+                    "id": "8668efc2-5807-4f40-96eb-6a97e6a0b45a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HoldBall",
+                    "type": "Button",
+                    "id": "fea81143-bf99-4b9c-9274-dd7bf9e1179a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReportMotion",
+                    "type": "Button",
+                    "id": "8b6a0cd9-d0b3-466e-9a8f-fc4489110c7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9ef96499-2fc0-44e9-bec6-cc6097978ab3",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "RobotServe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba6a04bd-6f9d-4058-bbc2-a33197a808e8",
+                    "path": "<Keyboard>/#(S)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RobotServe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d8c63a7-200f-4858-86ee-cdaaa082de3f",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "HoldBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6b98639-62c1-4cdc-aa81-d0f43c406ec6",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e1eca2f-1c7e-4ac5-8fb2-b80ab842d13d",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReportMotion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "AdjustGripActions",
+            "id": "8931261d-9116-4464-991b-8bc77a68b3a2",
+            "actions": [
+                {
+                    "name": "AdjustGripStart",
+                    "type": "Button",
+                    "id": "267ebf6a-8cbb-4ed7-8273-7d5237d10f3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AdjustGripEnd",
+                    "type": "Button",
+                    "id": "0d7263ae-5c98-4d62-9ffd-759b8791574b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "52ef2ca2-5346-443c-a937-04d4004748e3",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdjustGripStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6095d48-1627-409e-96b5-8a789f798380",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdjustGripEnd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MoveTableActions",
+            "id": "545e1803-d7e5-40fc-bb49-86dcaac2074c",
+            "actions": [
+                {
+                    "name": "MoveTableStart",
+                    "type": "Button",
+                    "id": "077b070f-eae9-41ee-a77d-a048912599d3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTableEnd",
+                    "type": "Button",
+                    "id": "21f43050-a7d9-4b2d-86f6-b49ebf18a3b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83462b68-e10d-4aae-bcd7-e041113022bc",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTableStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dd66980-45e3-4d9d-8f80-b05e20f4d1da",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTableEnd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "PlayControls",
+            "bindingGroup": "PlayControls",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<XRController>{LeftHand}",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<XRController>{RightHand}",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

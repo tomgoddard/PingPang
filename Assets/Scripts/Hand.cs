@@ -190,19 +190,12 @@ public class Grips {
     
     public void add_standard_grips() {
 
-	/*
-        Quaternion sh_grip_rotation = (Quaternion.AngleAxis(90f, new Vector3(0,0,1))
-                              * Quaternion.AngleAxis(90.0f, new Vector3(1,0,0)));
-        */
-	Quaternion sh_grip_rotation = Quaternion.identity;
-	Grip sg = new Grip("shake hands", "oculus rift", Vector3.zero, sh_grip_rotation);
-        grips.Add(sg);
-        Quaternion ph_grip_rotation = (Quaternion.AngleAxis(180f, new Vector3(0,0,1))
-                                 * Quaternion.AngleAxis(90.0f, new Vector3(1,0,0)));
-                Grip pg = new Grip("pen hold", "oculus rift", Vector3.zero, ph_grip_rotation);
-        grips.Add(pg);
-            Grip cg = new Grip("custom", "oculus rift", Vector3.zero, sh_grip_rotation);
-        grips.Add(cg);
+        // These shakehand and penhold grip orientations were hand adjusted in the PingPang app
+	// then saved to the grips.json file and copied into the code here.
+
+        string grips_json = "{'grips':[{'grip_name':'shake hands','hand_controller':'oculus rift','paddle_grip_position':{'x':0.02224968746304512,'y':0.010102644562721253,'z':0.036920297890901569},'paddle_grip_rotation':{'x':0.30727726221084597,'y':0.5398561358451843,'z':0.20197977125644685,'w':0.7571924328804016}},{'grip_name':'pen hold','hand_controller':'oculus rift','paddle_grip_position':{'x':0.02144036442041397,'y':0.008664235472679139,'z':0.07580696791410446},'paddle_grip_rotation':{'x':-0.06785616278648377,'y':0.7754804491996765,'z':0.6232571601867676,'w':0.07467453181743622}},{'grip_name':'custom','hand_controller':'oculus rift','paddle_grip_position':{'x':0.0,'y':0.0,'z':0.0},'paddle_grip_rotation':{'x':0.0,'y':0.0,'z':0.0,'w':1.0}}]}".Replace("'", "\"");
+
+        JsonUtility.FromJsonOverwrite(grips_json, this);
     }
 
     public Grip find_grip(string grip_name) {

@@ -3,6 +3,8 @@ Virtual reality ping pong aiming for maximum physics fidelity.
 
 Uses Unity XR and targets standalone Meta Quest headsets.
 
+https://github.com/user-attachments/assets/65bbd361-80c7-4f36-8441-1f453e02a7d6
+
 ## Problems
 
 - Inaccurate hand controller tracking.  This has been the biggest obstacle.  The tracking during fast motions is frequently wrong by more than 10 cm, while the typical table tennis paddle face radius is about 8 cm.  So a motion that should strike the ball in the middle of the paddle completely misses the ball in the VR simulation.

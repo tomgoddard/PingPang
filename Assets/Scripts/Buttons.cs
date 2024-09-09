@@ -78,12 +78,17 @@ public class Buttons : MonoBehaviour {
 	else
 	    play.robot.serve ();
     }
+
     public void OnHoldBall() {
 	if (!play.free_hand.holding_ball ())
             if (play.playing_game && !play.player_serves ())
                 play.robot.serve ();
 	    else
 		play.hold_ball(play.free_hand);
+    }
+
+    public void OnShowSettings() {
+	ui_panels.SetActive( !ui_panels.activeSelf );
     }
 
     /*

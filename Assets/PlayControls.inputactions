@@ -9,7 +9,7 @@
                     "name": "RobotServe",
                     "type": "Button",
                     "id": "8668efc2-5807-4f40-96eb-6a97e6a0b45a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -27,7 +27,16 @@
                     "name": "ReportMotion",
                     "type": "Button",
                     "id": "8b6a0cd9-d0b3-466e-9a8f-fc4489110c7d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowSettings",
+                    "type": "Button",
+                    "id": "2c8bf2e3-2b87-4fd3-87f2-38ac18336ac4",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -86,6 +95,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ReportMotion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2af16c30-683d-407f-8171-5d254b59e542",
+                    "path": "<OculusTouchController>{LeftHand}/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PlayControls",
+                    "action": "ShowSettings",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

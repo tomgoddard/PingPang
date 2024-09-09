@@ -22,6 +22,9 @@ public class Play : MonoBehaviour {
     int score_player = 0, score_robot = 0;
     public SettingsUI settings;
     public GameObject vr_camera;
+    public OVRPassthroughLayer pass_through_video;
+    public Renderer floor;  // Used to hide floor with pass-through video
+    public Camera passthrough_camera;   // Used to hide skybox with pass-through video
     public PathTracer path_tracer;
     int track_countdown;
     
@@ -284,6 +287,13 @@ public class Play : MonoBehaviour {
 	else
 	    Debug.Log("Failed to get IMU state.");
 	*/
+    }
+    
+    public void enable_show_room(bool show_room)
+    {
+	pass_through_video.enabled = show_room;
+	floor.enabled = !show_room;
+	passthrough_camera.clearFlags = (show_room ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox);
     }
 }
 

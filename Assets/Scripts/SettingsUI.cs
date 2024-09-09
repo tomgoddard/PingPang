@@ -12,33 +12,29 @@ public class SettingsUI : MonoBehaviour
 
     // Setting panels
     public GameObject ui_panels;
-    public GameObject general_settings, serve_settings, rally_settings;
+    public GameObject general_settings, serve_settings, rally_settings, cues_settings;
 
     public Button show_general_settings;
     public Button show_serve_settings;
     public Button show_rally_settings;
+    public Button show_cues_settings;
     public Button show_settings_button, hide_settings_button;
     public Button save_settings_button;
 
     public Play play;
 
+    // General settings:
+    public Toggle show_room;
+    
+    public Toggle righthanded, lefthanded;
     public Toggle shakehands, penholder, customgrip;
+    public Toggle custom_paddle;
     public Toggle adjust_grip;
     public Button save_grips;
-    public Toggle righthanded, lefthanded;
 
-    public Toggle custom_paddle;
     public Toggle white_ball, orange_striped_ball;
 
-    public Toggle hit_arrows;
-    public GameObject arrows;
-    public Toggle show_paddle_marker, show_net_marker, show_table_marker;
-    public Toggle show_paddle_tracks, show_ball_tracks;
-    public GameObject paddle_marker, robot_paddle_marker, net_marker, table_marker;
     public Toggle move_table;
-
-    public Toggle move_slow, move_medium, move_fast, move_unlimited;
-    public Toggle rally_slow, rally_medium, rally_fast;
 
     // Serve settings
     public Toggle auto_serve, repeat_serve;
@@ -53,6 +49,15 @@ public class SettingsUI : MonoBehaviour
     public Toggle spin_top, spin_back, spin_none, spin_back1top, spin_varied, spin_varied_back, spin_topback;
     public Toggle place_forehand, place_backhand, place_random_forehand, place_random, place_diagonal, place_down_line, place_elbow, place_no_return;
     public Toggle loop, smash, drop, chop, block;
+    public Toggle move_slow, move_medium, move_fast, move_unlimited;
+    public Toggle rally_slow, rally_medium, rally_fast;
+
+    // Visual Cues settings
+    public Toggle hit_arrows;
+    public GameObject arrows;
+    public Toggle show_paddle_marker, show_net_marker, show_table_marker;
+    public Toggle show_paddle_tracks, show_ball_tracks;
+    public GameObject paddle_marker, robot_paddle_marker, net_marker, table_marker;
 
     void Start()
     {
@@ -63,6 +68,7 @@ public class SettingsUI : MonoBehaviour
 
         // Buttons change settings as soon as they are clicked.
         bind_grip_buttons();
+	bind_show_room_button();
 	bind_move_table_button();
         bind_ball_color_buttons();
         bind_arrow_buttons();
@@ -84,6 +90,7 @@ public class SettingsUI : MonoBehaviour
         add_panel(general_settings, show_general_settings);
         add_panel(serve_settings, show_serve_settings);
         add_panel(rally_settings, show_rally_settings);
+	add_panel(cues_settings, show_cues_settings);
 
         show_settings_button.onClick.AddListener(delegate { ui_panels.SetActive( !ui_panels.activeSelf ); } );
         hide_settings_button.onClick.AddListener(delegate { ui_panels.SetActive(false); } );
@@ -102,7 +109,7 @@ public class SettingsUI : MonoBehaviour
     void show_settings(GameObject panel)
     {
         panel.SetActive(! panel.activeSelf);
-        GameObject [] panels = {general_settings, serve_settings, rally_settings};
+        GameObject [] panels = {general_settings, serve_settings, rally_settings, cues_settings};
         foreach (GameObject p in panels)
             if (p != panel)
                 p.SetActive(false);
@@ -406,7 +413,7 @@ public class SettingsUI : MonoBehaviour
 	}
 	else
 	{
-	    settings_data = "{\"grip\":\"shake hands\",\"toggle_names\":[\"show arrows\",\"show paddle marker\",\"show net marker\",\"show table marker\",\"show ball tracks\",\"show paddle tracks\",\"right\",\"left\",\"tracked paddle\",\"shakehands\",\"penholder\",\"custom\",\"white\",\"orange stripe\",\"auto serve\",\"repeat serve\",\"serve short\",\"serve medium\",\"serve long\",\"serve longest\",\"serve topspin\",\"serve backspin\",\"serve nospin\",\"serve to forehand\",\"serve to backhand\",\"serve to middle\",\"serve low\",\"serve medium high\",\"serve high\",\"slow\",\"medium\",\"fast\",\"top\",\"back\",\"none\",\"varied\",\"varied back\",\"1 back, then top\",\"top and back\",\"forehand\",\"backhand\",\"random fh\",\"random\",\"diagonal\",\"down line\",\"elbow\",\"no return\",\"loop\",\"smash\",\"drop\",\"chop\",\"block\",\"move slow\",\"move medium\",\"move fast\",\"move unlimited\"],\"toggle_values\":[false,false,false,false,false,false,true,false,false,true,false,false,true,false,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false,true,false,true,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true,true,true,true,true,false,true,false,false],\"use_player_position\":true,\"player_position\":{\"x\":0.0,\"y\":0.0,\"z\":-1.5}}";
+	    settings_data = "{\"grip\":\"shake hands\",\"toggle_names\":[\"show arrows\",\"show paddle marker\",\"show net marker\",\"show table marker\",\"show ball tracks\",\"show paddle tracks\",\"right\",\"left\",\"tracked paddle\",\"shakehands\",\"penholder\",\"custom\",\"white\",\"orange stripe\",\"auto serve\",\"repeat serve\",\"serve short\",\"serve medium\",\"serve long\",\"serve longest\",\"serve topspin\",\"serve backspin\",\"serve nospin\",\"serve to forehand\",\"serve to backhand\",\"serve to middle\",\"serve low\",\"serve medium high\",\"serve high\",\"slow\",\"medium\",\"fast\",\"top\",\"back\",\"none\",\"varied\",\"varied back\",\"1 back, then top\",\"top and back\",\"forehand\",\"backhand\",\"random fh\",\"random\",\"diagonal\",\"down line\",\"elbow\",\"no return\",\"loop\",\"smash\",\"drop\",\"chop\",\"block\",\"move slow\",\"move medium\",\"move fast\",\"move unlimited\",\"show room\"],\"toggle_values\":[false,false,false,false,false,false,true,false,false,true,false,false,true,false,false,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false,true,false,true,false,false,false,false,false,false,true,false,false,false,false,false,false,false,true,true,true,true,true,false,true,false,false,true],\"use_player_position\":true,\"player_position\":{\"x\":0.0,\"y\":0.0,\"z\":-1.5}}";
 	    Debug.Log("Could not read settings " + path);
 	}
 	
@@ -434,6 +441,11 @@ public class SettingsUI : MonoBehaviour
 	    play.vr_camera.transform.position = s.player_position;
 	
         return true;
+    }
+
+    void bind_show_room_button()
+    {
+	show_room.onValueChanged.AddListener(play.enable_show_room);
     }
 
     void bind_move_table_button()

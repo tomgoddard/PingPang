@@ -506,6 +506,12 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 350, y: 60, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &25886363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159718, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 756139876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &33830552
 GameObject:
   m_ObjectHideFlags: 0
@@ -14475,7 +14481,7 @@ MonoBehaviour:
   - {fileID: 186954007}
   playing_game: 0
   settings: {fileID: 1335788702}
-  vr_camera: {fileID: 1039414183}
+  vr_camera: {fileID: 25886363}
   pass_through_video: {fileID: 742967637}
   floor: {fileID: 366332733}
   passthrough_camera: {fileID: 336867470}
@@ -14864,18 +14870,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027429533}
   m_CullTransparentMesh: 0
---- !u!1 &1039414183 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 905446930833842387, guid: c116b7497ab8ca34c9188965d4295e27,
-    type: 3}
-  m_PrefabInstance: {fileID: 1276162300}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1039414184 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3494856239839707552, guid: c116b7497ab8ca34c9188965d4295e27,
-    type: 3}
-  m_PrefabInstance: {fileID: 1276162300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1042277607
 GameObject:
   m_ObjectHideFlags: 0
@@ -17338,7 +17332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   right: 1
   left: 0
-  tracking_space: {fileID: 1039414184}
+  tracking_space: {fileID: 756139877}
   latency: 0
   warning: {fileID: 575120066}
 --- !u!4 &1242590415
@@ -28764,7 +28758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   right: 0
   left: 1
-  tracking_space: {fileID: 1039414184}
+  tracking_space: {fileID: 756139877}
   latency: 0
   warning: {fileID: 575120066}
 --- !u!4 &2010892465

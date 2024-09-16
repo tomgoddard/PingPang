@@ -35,7 +35,8 @@ public class SettingsUI : MonoBehaviour
 
     public Toggle white_ball, orange_striped_ball;
 
-    public Toggle move_table;
+    public Toggle move_table, hide_table;
+    public Table table;
 
     // Serve settings
     public Toggle auto_serve, repeat_serve;
@@ -71,6 +72,7 @@ public class SettingsUI : MonoBehaviour
         bind_grip_buttons();
 	bind_show_room_button();
 	bind_move_table_button();
+	bind_hide_table_button();
         bind_ball_color_buttons();
         bind_arrow_buttons();
         bind_marker_buttons();
@@ -111,11 +113,7 @@ public class SettingsUI : MonoBehaviour
     {
 	ui_panels.SetActive( show );
 	if (! show)
-	{
-	//	    set_action_map("PlayActions");
 	    move_table.isOn = false;
-//	    buttons.enable_move_table(false);
-        }
     }
 
     public bool shown()
@@ -476,10 +474,21 @@ public class SettingsUI : MonoBehaviour
 	move_table.onValueChanged.AddListener(buttons.enable_move_table);
     }
 
+    void bind_hide_table_button()
+    {
+	hide_table.onValueChanged.AddListener(set_hide_table);
+    }
+
+    void set_hide_table(bool hide)
+    {
+       table.show_table(!hide);
+    }
+
     void bind_adjust_grip_button()
     {
 	adjust_grip.onValueChanged.AddListener(buttons.enable_adjust_grip);
     }
+    
 }
 
 [Serializable]

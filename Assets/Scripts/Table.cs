@@ -20,4 +20,9 @@ public class Table : MonoBehaviour
 	{
 		get { return table_top.transform.localPosition.y + 0.5f*table_top.transform.localScale.y; }
 	}
+	public void show_table(bool show)
+	{
+		foreach (MeshRenderer r in GetComponentsInChildren<MeshRenderer>())
+		    r.enabled = show;
+	}
 }

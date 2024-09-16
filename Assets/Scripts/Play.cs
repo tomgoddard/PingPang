@@ -67,6 +67,13 @@ public class Play : MonoBehaviour {
     }
     
     void Start() {
+    	// Request 90 Hz refresh rate on Quest 3.  Without this get default 72 Hz.
+	// I verified this is working with the Meta OVR Metrics Quest 3 app.
+        Unity.XR.Oculus.Performance.TrySetDisplayRefreshRate(90f);
+	// Play feels smoother at 120 Hz on Quest 3.  Check if I need to change
+	// hard-coded 90 Hz values in my code to get the correct physics at 120 Hz.
+	// Unity.XR.Oculus.Performance.TrySetDisplayRefreshRate(120f);
+
         hold_ball (free_hand);
     }
     

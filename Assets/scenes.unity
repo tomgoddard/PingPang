@@ -14397,6 +14397,7 @@ GameObject:
   - component: {fileID: 1005869014}
   - component: {fileID: 1005869015}
   - component: {fileID: 1005869016}
+  - component: {fileID: 1005869017}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -14449,7 +14450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   play: {fileID: 1005869013}
-  ui_panels: {fileID: 279970968}
+  settings_ui: {fileID: 1005869017}
 --- !u!114 &1005869013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14480,7 +14481,7 @@ MonoBehaviour:
   - {fileID: 1884125397}
   - {fileID: 186954007}
   playing_game: 0
-  settings: {fileID: 1335788702}
+  settings: {fileID: 1005869017}
   vr_camera: {fileID: 25886363}
   pass_through_video: {fileID: 742967637}
   floor: {fileID: 366332733}
@@ -14547,6 +14548,99 @@ MonoBehaviour:
   m_DefaultActionMap: PlayActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 889483785}
+--- !u!114 &1005869017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005869009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b41bb858de21c44eb76d9039c4a28d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: {fileID: 1005869012}
+  ui_panels: {fileID: 279970968}
+  general_settings: {fileID: 1047001233}
+  serve_settings: {fileID: 343533213}
+  rally_settings: {fileID: 1160968164}
+  cues_settings: {fileID: 1302413015}
+  show_general_settings: {fileID: 1681835747}
+  show_serve_settings: {fileID: 624275482}
+  show_rally_settings: {fileID: 443939098}
+  show_cues_settings: {fileID: 970174380}
+  show_settings_button: {fileID: 564185955}
+  hide_settings_button: {fileID: 569700418}
+  save_settings_button: {fileID: 523100665}
+  play: {fileID: 1005869013}
+  show_room: {fileID: 1565115491}
+  righthanded: {fileID: 1973393380}
+  lefthanded: {fileID: 667074571}
+  shakehands: {fileID: 25359601}
+  penholder: {fileID: 490333517}
+  customgrip: {fileID: 2011987626}
+  custom_paddle: {fileID: 97109438}
+  adjust_grip: {fileID: 1913681901}
+  save_grips: {fileID: 717833923}
+  white_ball: {fileID: 950475193}
+  orange_striped_ball: {fileID: 1876241796}
+  move_table: {fileID: 211653933}
+  auto_serve: {fileID: 778268493}
+  repeat_serve: {fileID: 1231418770}
+  serve_short: {fileID: 489734212}
+  serve_medium: {fileID: 1193264576}
+  serve_long: {fileID: 936542795}
+  serve_longest: {fileID: 2118958436}
+  serve_topspin: {fileID: 1431096751}
+  serve_backspin: {fileID: 605100176}
+  serve_nospin: {fileID: 1754219815}
+  serve_to_forehand: {fileID: 928937507}
+  serve_to_backhand: {fileID: 752929542}
+  serve_to_middle: {fileID: 1307176633}
+  serve_low: {fileID: 2135783377}
+  serve_medium_high: {fileID: 412141002}
+  serve_high: {fileID: 2048048243}
+  remove_serve: {fileID: 2111700944}
+  serves_matching: {fileID: 1970065449}
+  spin_top: {fileID: 1832537914}
+  spin_back: {fileID: 334327988}
+  spin_none: {fileID: 1934356197}
+  spin_back1top: {fileID: 1210992633}
+  spin_varied: {fileID: 930385585}
+  spin_varied_back: {fileID: 562005589}
+  spin_topback: {fileID: 1876550419}
+  place_forehand: {fileID: 1856894999}
+  place_backhand: {fileID: 1972601647}
+  place_random_forehand: {fileID: 2013541168}
+  place_random: {fileID: 2099938695}
+  place_diagonal: {fileID: 2097466248}
+  place_down_line: {fileID: 445281176}
+  place_elbow: {fileID: 1454561547}
+  place_no_return: {fileID: 1279939119}
+  loop: {fileID: 1813047538}
+  smash: {fileID: 1625901974}
+  drop: {fileID: 649084902}
+  chop: {fileID: 297482714}
+  block: {fileID: 449920922}
+  move_slow: {fileID: 1636635243}
+  move_medium: {fileID: 1451090358}
+  move_fast: {fileID: 653825416}
+  move_unlimited: {fileID: 740489812}
+  rally_slow: {fileID: 495711017}
+  rally_medium: {fileID: 1684579529}
+  rally_fast: {fileID: 1542442725}
+  hit_arrows: {fileID: 1005649494}
+  arrows: {fileID: 1170580271}
+  show_paddle_marker: {fileID: 43848249}
+  show_net_marker: {fileID: 4948083}
+  show_table_marker: {fileID: 516405176}
+  show_paddle_tracks: {fileID: 769582752}
+  show_ball_tracks: {fileID: 1161483833}
+  paddle_marker: {fileID: 542673342}
+  robot_paddle_marker: {fileID: 290242303}
+  net_marker: {fileID: 2023536277}
+  table_marker: {fileID: 33830552}
 --- !u!1 &1010183852
 GameObject:
   m_ObjectHideFlags: 0
@@ -18710,7 +18804,6 @@ GameObject:
   - component: {fileID: 1335788701}
   - component: {fileID: 1335788700}
   - component: {fileID: 1335788699}
-  - component: {fileID: 1335788702}
   m_Layer: 0
   m_Name: Show settings button
   m_TagString: Untagged
@@ -18801,99 +18894,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1335788702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335788697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b41bb858de21c44eb76d9039c4a28d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttons: {fileID: 1005869012}
-  ui_panels: {fileID: 279970968}
-  general_settings: {fileID: 1047001233}
-  serve_settings: {fileID: 343533213}
-  rally_settings: {fileID: 1160968164}
-  cues_settings: {fileID: 1302413015}
-  show_general_settings: {fileID: 1681835747}
-  show_serve_settings: {fileID: 624275482}
-  show_rally_settings: {fileID: 443939098}
-  show_cues_settings: {fileID: 970174380}
-  show_settings_button: {fileID: 564185955}
-  hide_settings_button: {fileID: 569700418}
-  save_settings_button: {fileID: 523100665}
-  play: {fileID: 1005869013}
-  show_room: {fileID: 1565115491}
-  righthanded: {fileID: 1973393380}
-  lefthanded: {fileID: 667074571}
-  shakehands: {fileID: 25359601}
-  penholder: {fileID: 490333517}
-  customgrip: {fileID: 2011987626}
-  custom_paddle: {fileID: 97109438}
-  adjust_grip: {fileID: 1913681901}
-  save_grips: {fileID: 717833923}
-  white_ball: {fileID: 950475193}
-  orange_striped_ball: {fileID: 1876241796}
-  move_table: {fileID: 211653933}
-  auto_serve: {fileID: 778268493}
-  repeat_serve: {fileID: 1231418770}
-  serve_short: {fileID: 489734212}
-  serve_medium: {fileID: 1193264576}
-  serve_long: {fileID: 936542795}
-  serve_longest: {fileID: 2118958436}
-  serve_topspin: {fileID: 1431096751}
-  serve_backspin: {fileID: 605100176}
-  serve_nospin: {fileID: 1754219815}
-  serve_to_forehand: {fileID: 928937507}
-  serve_to_backhand: {fileID: 752929542}
-  serve_to_middle: {fileID: 1307176633}
-  serve_low: {fileID: 2135783377}
-  serve_medium_high: {fileID: 412141002}
-  serve_high: {fileID: 2048048243}
-  remove_serve: {fileID: 2111700944}
-  serves_matching: {fileID: 1970065449}
-  spin_top: {fileID: 1832537914}
-  spin_back: {fileID: 334327988}
-  spin_none: {fileID: 1934356197}
-  spin_back1top: {fileID: 1210992633}
-  spin_varied: {fileID: 930385585}
-  spin_varied_back: {fileID: 562005589}
-  spin_topback: {fileID: 1876550419}
-  place_forehand: {fileID: 1856894999}
-  place_backhand: {fileID: 1972601647}
-  place_random_forehand: {fileID: 2013541168}
-  place_random: {fileID: 2099938695}
-  place_diagonal: {fileID: 2097466248}
-  place_down_line: {fileID: 445281176}
-  place_elbow: {fileID: 1454561547}
-  place_no_return: {fileID: 1279939119}
-  loop: {fileID: 1813047538}
-  smash: {fileID: 1625901974}
-  drop: {fileID: 649084902}
-  chop: {fileID: 297482714}
-  block: {fileID: 449920922}
-  move_slow: {fileID: 1636635243}
-  move_medium: {fileID: 1451090358}
-  move_fast: {fileID: 653825416}
-  move_unlimited: {fileID: 740489812}
-  rally_slow: {fileID: 495711017}
-  rally_medium: {fileID: 1684579529}
-  rally_fast: {fileID: 1542442725}
-  hit_arrows: {fileID: 1005649494}
-  arrows: {fileID: 1170580271}
-  show_paddle_marker: {fileID: 43848249}
-  show_net_marker: {fileID: 4948083}
-  show_table_marker: {fileID: 516405176}
-  show_paddle_tracks: {fileID: 769582752}
-  show_ball_tracks: {fileID: 1161483833}
-  paddle_marker: {fileID: 542673342}
-  robot_paddle_marker: {fileID: 290242303}
-  net_marker: {fileID: 2023536277}
-  table_marker: {fileID: 33830552}
 --- !u!1 &1337882896
 GameObject:
   m_ObjectHideFlags: 0

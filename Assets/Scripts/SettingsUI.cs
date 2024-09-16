@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;     // Use File
 using System;        // Use Serializable
 using UnityEngine;
+using UnityEngine.InputSystem;		// Use PlayerInput
 using UnityEngine.UI;
 
 public class SettingsUI : MonoBehaviour
@@ -92,8 +93,8 @@ public class SettingsUI : MonoBehaviour
         add_panel(rally_settings, show_rally_settings);
 	add_panel(cues_settings, show_cues_settings);
 
-        show_settings_button.onClick.AddListener(delegate { ui_panels.SetActive( !ui_panels.activeSelf ); } );
-        hide_settings_button.onClick.AddListener(delegate { ui_panels.SetActive(false); } );
+        show_settings_button.onClick.AddListener(delegate { show_ui( !shown() ); } );
+        hide_settings_button.onClick.AddListener(delegate { show_ui(false); } );
     }
     
     void bind_save_button()
@@ -105,7 +106,23 @@ public class SettingsUI : MonoBehaviour
     {
         show.onClick.AddListener(delegate { show_settings(panel); } );
     }
-    
+
+    public void show_ui(bool show)
+    {
+	ui_panels.SetActive( show );
+	if (! show)
+	{
+	//	    set_action_map("PlayActions");
+	    move_table.isOn = false;
+//	    buttons.enable_move_table(false);
+        }
+    }
+
+    public bool shown()
+    {
+        return ui_panels.activeSelf;
+    }
+
     void show_settings(GameObject panel)
     {
         panel.SetActive(! panel.activeSelf);
@@ -113,6 +130,12 @@ public class SettingsUI : MonoBehaviour
         foreach (GameObject p in panels)
             if (p != panel)
                 p.SetActive(false);
+    }
+
+    void set_action_map(string action_map)
+    {
+	PlayerInput player_input = GetComponent<PlayerInput>();
+	player_input.SwitchCurrentActionMap(action_map);
     }
 
     void bind_grip_buttons()

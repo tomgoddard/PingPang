@@ -235,6 +235,13 @@ public class Wand : MonoBehaviour {
 	return p;
     }
 
+    public Quaternion rotation() {
+        Vector3 p, v, av, a;
+        Quaternion r;
+        wand_motion(out p, out r, out v, out av, out a);
+	return r;
+    }
+
     /*
     public void wand_motion1(out Vector3 position, out Quaternion rotation,
                             out Vector3 velocity, out Vector3 angular_velocity,

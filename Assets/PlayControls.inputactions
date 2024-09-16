@@ -119,7 +119,7 @@
                     "name": "AdjustGripStart",
                     "type": "Button",
                     "id": "267ebf6a-8cbb-4ed7-8273-7d5237d10f3a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
@@ -167,7 +167,7 @@
                     "name": "MoveTableStart",
                     "type": "Button",
                     "id": "077b070f-eae9-41ee-a77d-a048912599d3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
@@ -179,6 +179,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowSettings",
+                    "type": "Button",
+                    "id": "301dee80-962b-4aca-8bcf-efc088ed1bf0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -202,6 +211,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveTableEnd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "66d73844-86f3-4879-b6a6-5149191a6363",
+                    "path": "<OculusTouchController>{LeftHand}/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PlayControls",
+                    "action": "ShowSettings",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

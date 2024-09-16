@@ -13,11 +13,12 @@ public class Buttons : MonoBehaviour {
     */
     
     public Play play;
-    public GameObject ui_panels;
+    public SettingsUI settings_ui;
 
     bool adjusting_grip;
     bool moving_table;
     Vector3 last_table_move_position;
+    Quaternion last_table_move_rotation;
 
     void Start() {
 	/*
@@ -88,13 +89,13 @@ public class Buttons : MonoBehaviour {
     }
 
     public void OnShowSettings() {
-	ui_panels.SetActive( !ui_panels.activeSelf );
+        settings_ui.show_ui(! settings_ui.shown());
     }
 
     /*
     void show_settings(SteamVR_Action_Boolean unused,
 		       SteamVR_Input_Sources hand_type) {
-	ui_panels.SetActive( !ui_panels.activeSelf );
+        settings_ui.show_ui(! settings_ui.shown());
     }
 
     void show_tracks(SteamVR_Action_Boolean unused,
@@ -123,23 +124,44 @@ public class Buttons : MonoBehaviour {
 	string action_map = (enable ? "MoveTableActions" : "PlayActions");
 	PlayerInput player_input = GetComponent<PlayerInput>();
 	player_input.SwitchCurrentActionMap(action_map);
+	if (!enable)
+	  moving_table = false;
     }
     public void OnMoveTableStart() {
 	moving_table = true;
-	Vector3 hand_position = play.paddle_hand.wand.position();
-	last_table_move_position = hand_position;
+	last_table_move_position = play.paddle_hand.wand.position();
+	last_table_move_rotation = play.paddle_hand.wand.rotation();
     }
     public void OnMoveTableEnd() {
 	moving_table = false;
     }
     void move_table() {
-	Hand paddle_hand = play.paddle_hand;
-	Vector3 hand_position = paddle_hand.wand.position();
-	Vector3 offset = hand_position - last_table_move_position;
+        // Allow only rotation about vertical.
+	Wand paddle_wand = play.paddle_hand.wand;
+	Quaternion paddle_rotation = paddle_wand.rotation();
+	Quaternion rotation = paddle_rotation * Quaternion.Inverse(last_table_move_rotation);
+	float angle;
+	Vector3 axis;
+	rotation.ToAngleAxis(out angle, out axis);
+	Quaternion y_rotation = Quaternion.AngleAxis(axis.y * angle, Vector3.up);
+
+	// Don't allow changing vertical position of table.
+	Vector3 paddle_position = paddle_wand.position();
+	Vector3 offset = paddle_position - y_rotation*last_table_move_position;
 	offset.y = 0f;
-	play.vr_camera.transform.position -= offset;
+
+	// To move table y_rotation and offset, move camera by inverse.
+	Quaternion c_rotation = Quaternion.Inverse(y_rotation);
+	Vector3 c_offset = -(c_rotation * offset);
+
+	// Apply camera motion on left.
+	Transform player_transform = play.vr_camera.transform;
+	player_transform.rotation = c_rotation * player_transform.rotation;
+	player_transform.position = c_offset + c_rotation * player_transform.position;
+
 	// Update hand position for new camera position.
-	last_table_move_position = paddle_hand.wand.position();
+	last_table_move_position = paddle_wand.position();
+	last_table_move_rotation = paddle_wand.rotation();
     }
     
     public void enable_adjust_grip(bool enable)

@@ -14,7 +14,8 @@ using UnityEngine.XR;
 // controller poses.  The paddle follows the mouse pointer so fast mouse
 // motions swing the paddle and can hit the ball.
 [DefaultExecutionOrder(-50)]  // Update hands before Play.Update() uses them.
-public class DesktopRig : MonoBehaviour {
+public class DesktopRig : MonoBehaviour
+{
 
     public static DesktopRig active;
 
@@ -55,7 +56,8 @@ public class DesktopRig : MonoBehaviour {
     float haptic_min_show = 0.15f;    // Seconds, so short pulses are visible.
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    static void create_if_no_headset() {
+    static void create_if_no_headset()
+    {
         if (Application.platform == RuntimePlatform.Android || XRSettings.isDeviceActive)
             return;
         Play play = FindFirstObjectByType<Play>();
@@ -70,18 +72,21 @@ public class DesktopRig : MonoBehaviour {
         Debug.Log("No headset found, using mouse and keyboard (DesktopRig).  Press H for help.");
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         active = this;
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         if (active == this)
             active = null;
     }
 
     // Called by Wand.wand_motion() when there is no XR controller.
     public bool hand_motion(bool left, out Vector3 position, out Quaternion rotation,
-                            out Vector3 velocity) {
+                            out Vector3 velocity)
+    {
         bool paddle = (left == play.paddle_hand.wand.left);
         position = (paddle ? paddle_hand_position : free_hand_position);
         rotation = (paddle ? paddle_hand_rotation : free_hand_rotation);
@@ -90,39 +95,48 @@ public class DesktopRig : MonoBehaviour {
     }
 
     // Called by Wand.haptic_pulse() when there is no XR controller.
-    public void show_haptic(bool left, float duration, float strength) {
+    public void show_haptic(bool left, float duration, float strength)
+    {
         float until = Time.time + Mathf.Max(duration, haptic_min_show);
-        if (left == play.paddle_hand.wand.left) {
+        if (left == play.paddle_hand.wand.left)
+        {
             paddle_haptic_until = until;
             paddle_haptic_count += 1;
-        } else {
+        }
+        else
+        {
             free_haptic_until = until;
             free_haptic_count += 1;
         }
     }
 
-    public void set_pointer(Vector2 viewport_position) {
+    public void set_pointer(Vector2 viewport_position)
+    {
         pointer = viewport_position;
         pointer_fixed = true;
     }
 
-    public void hold_ball() {
+    public void hold_ball()
+    {
         if (buttons != null)
             buttons.OnHoldBall();
     }
 
-    public void toss_ball() {
+    public void toss_ball()
+    {
         toss_time = 0f;
     }
 
-    public void robot_serve() {
+    public void robot_serve()
+    {
         if (buttons != null)
             buttons.OnRobotServe();
     }
 
     // Move the head to stand at a floor position facing a direction, e.g.
     // on the phase's stand marker.  In VR the player walks there.
-    public void stand_at(Vector3 world_position, Vector3 world_forward) {
+    public void stand_at(Vector3 world_position, Vector3 world_forward)
+    {
         Vector3 p = tracking_space.InverseTransformPoint(world_position);
         head_position = new Vector3(p.x, 1.6f, p.z);
         Vector3 f = tracking_space.InverseTransformDirection(world_forward);
@@ -130,16 +144,19 @@ public class DesktopRig : MonoBehaviour {
         pitch = 20f;
     }
 
-    void Update() {
+    void Update()
+    {
         float delta_t = Time.deltaTime;
-        if (!room_hidden) {
+        if (!room_hidden)
+        {
             // Passthrough shows nothing in the editor, only a black
             // background, so show the virtual room instead.
             room_hidden = true;
             play.enable_show_room(false);
         }
         handle_input(delta_t);
-        if (toss_time >= 0f) {
+        if (toss_time >= 0f)
+        {
             toss_time += delta_t;
             if (toss_time > 3f * toss_duration)
                 toss_time = -1f;   // Hand back down.
@@ -147,31 +164,38 @@ public class DesktopRig : MonoBehaviour {
         update_hands(delta_t);
     }
 
-    void LateUpdate() {
+    void LateUpdate()
+    {
         // Set camera after the camera rig has updated so ours wins.
         if (head_camera != null && tracking_space != null)
             head_camera.transform.SetPositionAndRotation(tracking_space.TransformPoint(head_position),
                                                          tracking_space.rotation * head_rotation());
     }
 
-    Quaternion head_rotation() {
+    Quaternion head_rotation()
+    {
         return Quaternion.Euler(pitch, yaw, 0f);
     }
 
-    Quaternion body_rotation() {
+    Quaternion body_rotation()
+    {
         return Quaternion.Euler(0f, yaw, 0f);
     }
 
-    void handle_input(float delta_t) {
+    void handle_input(float delta_t)
+    {
         Mouse mouse = Mouse.current;
         Keyboard keys = Keyboard.current;
 
-        if (mouse != null) {
-            if (!pointer_fixed && Screen.width > 0 && Screen.height > 0) {
+        if (mouse != null)
+        {
+            if (!pointer_fixed && Screen.width > 0 && Screen.height > 0)
+            {
                 Vector2 m = mouse.position.ReadValue();
                 pointer = new Vector2(m.x / Screen.width, m.y / Screen.height);
             }
-            if (mouse.rightButton.isPressed) {
+            if (mouse.rightButton.isPressed)
+            {
                 Vector2 d = mouse.delta.ReadValue();
                 yaw += look_speed * d.x;
                 pitch = Mathf.Clamp(pitch - look_speed * d.y, -80f, 80f);
@@ -210,13 +234,15 @@ public class DesktopRig : MonoBehaviour {
 
         // Same as right controller A and B buttons.
         GhostCoach coach = FindFirstObjectByType<GhostCoach>();
-        if (coach != null) {
+        if (coach != null)
+        {
             if (keys.pKey.wasPressedThisFrame) coach.OnGhostTogglePhase();
             if (keys.kKey.wasPressedThisFrame) coach.OnGhostRecord();
             if (keys.lKey.wasPressedThisFrame) coach.OnGhostSpeed();
             if (keys.nKey.wasPressedThisFrame) coach.OnGhostNewSession();
             if (keys.backspaceKey.wasPressedThisFrame) coach.OnGhostReset();
             if (keys.gKey.wasPressedThisFrame) coach.OnGhostToggleHands();
+            if (keys.fKey.wasPressedThisFrame && coach.ball_feeder != null) coach.ball_feeder.OnToggleBallFeed();
         }
         // Same as choosing Right or Left in the settings menu.
         if (keys.vKey.wasPressedThisFrame && play.settings != null)
@@ -225,20 +251,22 @@ public class DesktopRig : MonoBehaviour {
 
     // The Right and Left toggles share a toggle group, but the group only
     // switches the other one off while the menu is shown, so do it here.
-    public static void set_left_handed(SettingsUI settings, bool left) {
+    public static void set_left_handed(SettingsUI settings, bool left)
+    {
         (left ? settings.righthanded : settings.lefthanded).isOn = false;
         (left ? settings.lefthanded : settings.righthanded).isOn = true;
     }
 
-    void update_hands(float delta_t) {
+    void update_hands(float delta_t)
+    {
         Quaternion head = head_rotation();
         Quaternion body = body_rotation();
 
         // Paddle center along the pointer ray from the head.
         float tan_y = Mathf.Tan(0.5f * Mathf.Deg2Rad * (head_camera != null ? head_camera.fieldOfView : 60f));
-        float aspect = (Screen.height > 0 ? (float)Screen.width / Screen.height : 16f/9f);
-        Vector3 ray = new Vector3((2f*pointer.x - 1f) * tan_y * aspect,
-                                  (2f*pointer.y - 1f) * tan_y, 1f).normalized;
+        float aspect = (Screen.height > 0 ? (float)Screen.width / Screen.height : 16f / 9f);
+        Vector3 ray = new Vector3((2f * pointer.x - 1f) * tan_y * aspect,
+                                  (2f * pointer.y - 1f) * tan_y, 1f).normalized;
         Vector3 paddle_position = head_position + head * (reach * ray);
 
         // Paddle blade upright facing forward, forehand or backhand rubber
@@ -253,7 +281,8 @@ public class DesktopRig : MonoBehaviour {
             return;
         Vector3 gp = grip.paddle_grip_position;
         Quaternion gr = grip.paddle_grip_rotation;
-        if (play.paddle_hand.wand.left) {
+        if (play.paddle_hand.wand.left)
+        {
             gp = new Vector3(-gp.x, gp.y, gp.z);
             gr = new Quaternion(gr.x, -gr.y, -gr.z, gr.w);
         }
@@ -263,12 +292,14 @@ public class DesktopRig : MonoBehaviour {
         // Free hand low in front of the body on the side away from the paddle.
         float side = (play.paddle_hand.wand.left ? 1f : -1f);
         Vector3 free_position = head_position + body * new Vector3(0.25f * side, -0.45f, 0.35f);
-        if (toss_time >= 0f) {
+        if (toss_time >= 0f)
+        {
             float f = Mathf.Min(toss_time / toss_duration, 1f);
             free_position.y += toss_height * Mathf.Sin(0.5f * Mathf.PI * f);
         }
 
-        if (have_poses && delta_t > 0f) {
+        if (have_poses && delta_t > 0f)
+        {
             paddle_hand_velocity = (hand_position - paddle_hand_position) / delta_t;
             free_hand_velocity = (free_position - free_hand_position) / delta_t;
         }
@@ -281,28 +312,33 @@ public class DesktopRig : MonoBehaviour {
 
     // Click menu toggles and buttons with the mouse.  In VR they are
     // pressed by touching them with the paddle (TouchUI).
-    void click_ui() {
+    void click_ui()
+    {
         if (head_camera == null)
             return;
         Ray r = head_camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit[] hits = Physics.RaycastAll(r, 20f, ~0, QueryTriggerInteraction.Collide);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-        foreach (RaycastHit h in hits) {
+        foreach (RaycastHit h in hits)
+        {
             GameObject g = h.collider.gameObject;
-            if (g.GetComponent<Toggle>() != null || g.GetComponent<Button>() != null) {
+            if (g.GetComponent<Toggle>() != null || g.GetComponent<Button>() != null)
+            {
                 ExecuteEvents.Execute(g, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
                 return;
             }
         }
     }
 
-    void OnGUI() {
+    void OnGUI()
+    {
         float y = Screen.height - 40;
         if (Time.time < paddle_haptic_until)
             GUI.Box(new Rect(10, y, 260, 28), "Haptic: paddle hand (" + paddle_haptic_count + ")");
         if (Time.time < free_haptic_until)
             GUI.Box(new Rect(280, y, 260, 28), "Haptic: free hand (" + free_haptic_count + ")");
-        if (!show_help) {
+        if (!show_help)
+        {
             GUI.Label(new Rect(10, 10, 300, 25), "H: help");
             return;
         }
@@ -316,7 +352,7 @@ public class DesktopRig : MonoBehaviour {
             "P: coach/path phase   K: next stroke\n" +
             "L: coach speed 100/50/25%   V: right/left handed\n" +
             "N: next test participant   Backspace: reset\n" +
-            "G: hide/show racket and ball in hand\n" +
+            "G: hide/show racket and ball in hand   F: ball feed\n" +
             "H: hide help";
         GUI.Box(new Rect(10, 10, 420, 200), "");
         GUI.Label(new Rect(18, 14, 410, 185), help);

@@ -6,10 +6,12 @@ using UnityEngine;
 // instead of a headset.  Run from the command line with
 //   Unity -batchmode -nographics -projectPath . -executeMethod ControllerMapperTest.run
 // Exit code 0 means all checks passed.
-public static class ControllerMapperTest {
+public static class ControllerMapperTest
+{
 
     // Also used by DesktopSmokeTest to press buttons in the real scene.
-    public class Fake : IButtonSource {
+    public class Fake : IButtonSource
+    {
         public bool[,] state = new bool[2, 6];
         public bool down(bool left_hand, Btn b) { return state[left_hand ? 0 : 1, (int)b]; }
         public void set(bool left_hand, Btn b, bool value) { state[left_hand ? 0 : 1, (int)b] = value; }
@@ -19,17 +21,21 @@ public static class ControllerMapperTest {
     static List<string> fired = new List<string>();
 
     [MenuItem("GhostCoach/Run controller button test")]
-    public static void run() {
+    public static void run()
+    {
         failures.Clear();
         float old_window = ButtonDedup.window;
-        try {
+        try
+        {
             right_handed();
             left_handed();
             button_modes();
             hold_for_new_participant();
             holding_does_not_repeat();
             dedup();
-        } finally {
+        }
+        finally
+        {
             ButtonDedup.window = old_window;
         }
         bool ok = (failures.Count == 0);
@@ -38,20 +44,23 @@ public static class ControllerMapperTest {
             EditorApplication.Exit(ok ? 0 : 1);
     }
 
-    static void check(bool ok, string what) {
+    static void check(bool ok, string what)
+    {
         Debug.Log("ControllerMapperTest " + (ok ? "PASS " : "FAIL ") + what);
         if (!ok)
             failures.Add(what);
     }
 
-    static ControllerMapper mapper() {
+    static ControllerMapper mapper()
+    {
         ControllerMapper m = new ControllerMapper();
         m.fire = a => fired.Add(a);
         return m;
     }
 
     // Press one button for a frame and return what it fired.
-    static string press(ControllerMapper m, Fake f, bool left_handed, bool left_hand, Btn b, float t) {
+    static string press(ControllerMapper m, Fake f, bool left_handed, bool left_hand, Btn b, float t)
+    {
         fired.Clear();
         f.set(left_hand, b, true);
         m.update(f, left_handed, t);
@@ -60,7 +69,8 @@ public static class ControllerMapperTest {
         return string.Join(",", fired);
     }
 
-    static void right_handed() {
+    static void right_handed()
+    {
         ControllerMapper m = mapper();
         Fake f = new Fake();
         check(press(m, f, false, true, Btn.Trigger, 0f) == "RobotServe", "right handed: left trigger serves");
@@ -71,11 +81,12 @@ public static class ControllerMapperTest {
         check(press(m, f, false, false, Btn.Primary, 5f) == "GhostTogglePhase", "right handed: right A switches phase");
         check(press(m, f, false, false, Btn.Secondary, 6f) == "GhostRecord", "right handed: right B records");
         check(press(m, f, false, false, Btn.Thumbstick, 7f) == "GhostSpeed", "right handed: right thumbstick click changes speed");
-        check(press(m, f, false, false, Btn.Trigger, 8f) == "", "right handed: the paddle hand's trigger does nothing");
+        check(press(m, f, false, false, Btn.Trigger, 8f) == "ToggleBallFeed", "right handed: the paddle hand's trigger toggles ball feed");
         check(press(m, f, false, false, Btn.Menu, 9f) == "", "right handed: the right controller has no menu button");
     }
 
-    static void left_handed() {
+    static void left_handed()
+    {
         ControllerMapper m = mapper();
         Fake f = new Fake();
         check(press(m, f, true, false, Btn.Trigger, 0f) == "RobotServe", "left handed: right trigger serves");
@@ -85,10 +96,11 @@ public static class ControllerMapperTest {
         check(press(m, f, true, true, Btn.Secondary, 4f) == "GhostRecord", "left handed: left Y records");
         check(press(m, f, true, true, Btn.Thumbstick, 5f) == "GhostSpeed", "left handed: left thumbstick click changes speed");
         check(press(m, f, true, true, Btn.Menu, 6f) == "ShowSettings", "left handed: the menu button is still the left one");
-        check(press(m, f, true, true, Btn.Trigger, 7f) == "", "left handed: the paddle hand's trigger does nothing");
+        check(press(m, f, true, true, Btn.Trigger, 7f) == "ToggleBallFeed", "left handed: the paddle hand's trigger toggles ball feed");
     }
 
-    static void button_modes() {
+    static void button_modes()
+    {
         ControllerMapper m = mapper();
         Fake f = new Fake();
         m.move_table_mode = true;
@@ -114,32 +126,34 @@ public static class ControllerMapperTest {
         check(press(m, f, false, true, Btn.Trigger, 5f) == "RobotServe", "back to normal after the modes");
     }
 
-    static void hold_for_new_participant() {
+    static void hold_for_new_participant()
+    {
         ControllerMapper m = mapper();
         Fake f = new Fake();
         fired.Clear();
         f.set(true, Btn.Thumbstick, true);
-        for (float t = 0f ; t <= 1.4f ; t += 0.1f)
+        for (float t = 0f; t <= 1.4f; t += 0.1f)
             m.update(f, false, t);
         check(fired.Count == 0, "a short hold of the thumbstick does nothing");
-        for (float t = 1.5f ; t <= 3f ; t += 0.1f)
+        for (float t = 1.5f; t <= 3f; t += 0.1f)
             m.update(f, false, t);
         check(string.Join(",", fired) == "GhostNewSession", "holding 1.5 s starts a new participant, once: " + string.Join(",", fired));
         f.set(true, Btn.Thumbstick, false);
         m.update(f, false, 3.2f);
         fired.Clear();
         f.set(true, Btn.Thumbstick, true);
-        for (float t = 4f ; t <= 6f ; t += 0.1f)
+        for (float t = 4f; t <= 6f; t += 0.1f)
             m.update(f, false, t);
         check(string.Join(",", fired) == "GhostNewSession", "a new hold works again after letting go");
     }
 
-    static void holding_does_not_repeat() {
+    static void holding_does_not_repeat()
+    {
         ControllerMapper m = mapper();
         Fake f = new Fake();
         fired.Clear();
         f.set(true, Btn.Trigger, true);
-        for (int i = 0 ; i < 30 ; ++i)
+        for (int i = 0; i < 30; ++i)
             m.update(f, false, 0.02f * i);
         check(fired.Count == 1, "holding a button fires once, not every frame (" + fired.Count + ")");
         f.set(true, Btn.Trigger, false);
@@ -149,7 +163,8 @@ public static class ControllerMapperTest {
         check(fired.Count == 2, "pressing again fires again");
     }
 
-    static void dedup() {
+    static void dedup()
+    {
         ButtonDedup.window = 0.15f;
         ButtonDedup.log.Clear();
         // Time.unscaledTime does not move inside this call, so a second press

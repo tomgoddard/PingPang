@@ -55,6 +55,7 @@ public class ControllerInput : MonoBehaviour {
         case "GhostSpeed": if (coach != null) coach.OnGhostSpeed(); break;
         case "GhostToggleHands": if (coach != null) coach.OnGhostToggleHands(); break;
         case "GhostNewSession": if (coach != null) coach.OnGhostNewSession(); break;
+        case "ToggleBallFeed": if (coach != null && coach.ball_feeder != null) coach.ball_feeder.OnToggleBallFeed(); break;
         }
     }
 }

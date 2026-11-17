@@ -1,4 +1,4 @@
-﻿using System;  // use IntPtr
+using System;  // use IntPtr
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -200,6 +200,12 @@ public class Play : MonoBehaviour {
         ball_in_play = ball;
 	record_tracks(true);
         return ball;
+    }
+
+    public void start_ball_feed(Ball ball) {
+        play_state = null;
+        ball_in_play = ball;
+        record_tracks(true);
     }
 
     public void start_game() {

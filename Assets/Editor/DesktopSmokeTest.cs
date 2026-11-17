@@ -25,6 +25,9 @@ public static class DesktopSmokeTest {
     static int participants_before_hold;
     static bool hands_hidden_before_button;
     static List<bool> paddle_states = new List<bool>();
+    static Ball fed_ball_1;
+    static Vector3 fed_spawn_1, fed_vel_1, fed_near_bounce_1;
+    static bool fed_far_bounced, fed_near_bounced;
     static bool saved_options_enabled;
     static EnterPlayModeOptions saved_options;
 
@@ -442,6 +445,62 @@ public static class DesktopSmokeTest {
             int now = int.Parse(coach.experiment.participant.Substring(1));
             check(ButtonDedup.log.Contains("GhostNewSession") && now == participants_before_hold + 1,
                   "holding the left thumbstick starts the next participant, " + coach.experiment.participant);
+
+            // Toggle BallFeeder on via paddle hand trigger (right trigger).
+            check(coach.ball_feeder != null, "BallFeeder component created");
+            ButtonDedup.log.Clear();
+            fake_controllers.set(false, Btn.Trigger, true);
+            fed_far_bounced = false;
+            fed_near_bounced = false;
+            next_phase();
+        }
+        else if (phase == 17) {
+            GhostCoach coach = Object.FindFirstObjectByType<GhostCoach>();
+            BallFeeder feeder = coach.ball_feeder;
+            if (t > 0.1f)
+                fake_controllers.set(false, Btn.Trigger, false);
+            if (fed_ball_1 == null && feeder.fed_count >= 1) {
+                fed_ball_1 = play.ball_in_play;
+                fed_spawn_1 = feeder.last_spawn_position;
+                fed_vel_1 = feeder.last_launch_velocity;
+                check(ButtonDedup.log.Contains("ToggleBallFeed") && feeder.feeding,
+                      "paddle hand trigger starts standalone ball feed");
+                check(!play.robot_active && !coach.coach_ghost.showing && !coach.path_guide.showing,
+                      "ball feed runs standalone with robot and ghost hidden");
+                check(fed_spawn_1.z > 0f && fed_vel_1.z < 0f,
+                      "fed ball spawns on far side (" + fed_spawn_1.ToString("F2") + ") moving toward player");
+            }
+            if (fed_ball_1 != null) {
+                Vector3 bp = fed_ball_1.transform.position;
+                Vector3 bv = fed_ball_1.motion.velocity;
+                if (!fed_far_bounced && bp.z > 0f && bv.y > 0f && bp.y <= coach.table.height + 0.10f)
+                    fed_far_bounced = true;
+                if (fed_far_bounced && !fed_near_bounced && bp.z < 0f && bv.y > 0f && bp.y <= coach.table.height + 0.10f) {
+                    fed_near_bounced = true;
+                    fed_near_bounce_1 = bp;
+                }
+            }
+            if (t > 1.5f) {
+                check(fed_far_bounced && fed_near_bounced,
+                      "fed ball bounces on far side then near side (" + fed_near_bounce_1.ToString("F2") + ")");
+                next_phase();
+            }
+        }
+        else if (phase == 18 && t > 1.7f) {
+            GhostCoach coach = Object.FindFirstObjectByType<GhostCoach>();
+            BallFeeder feeder = coach.ball_feeder;
+            check(feeder.fed_count >= 2,
+                  "second ball fed after ~3 seconds regardless of player return (count " + feeder.fed_count + ")");
+            check((feeder.last_spawn_position - fed_spawn_1).magnitude < 0.001f
+                  && (feeder.last_launch_velocity - fed_vel_1).magnitude < 0.001f,
+                  "second feed has identical spawn and launch velocity");
+            fake_controllers.set(false, Btn.Trigger, true);
+            next_phase();
+        }
+        else if (phase == 19 && t > 0.2f) {
+            fake_controllers.set(false, Btn.Trigger, false);
+            GhostCoach coach = Object.FindFirstObjectByType<GhostCoach>();
+            check(!coach.ball_feeder.feeding, "paddle hand trigger toggles ball feed off");
             finish();
         }
     }

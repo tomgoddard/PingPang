@@ -64,6 +64,7 @@ public class ControllerMapper {
         if (edge[paddle_hand, (int)Btn.Primary] == 1) fire("GhostTogglePhase");
         if (edge[paddle_hand, (int)Btn.Secondary] == 1) fire("GhostRecord");
         if (edge[paddle_hand, (int)Btn.Thumbstick] == 1) fire("GhostSpeed");
+        if (edge[paddle_hand, (int)Btn.Trigger] == 1) fire("ToggleBallFeed");
 
         // Holding the free hand's thumbstick in starts the next participant.
         if (was[free_hand, (int)Btn.Thumbstick]) {

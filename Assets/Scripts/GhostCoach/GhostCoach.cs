@@ -28,6 +28,7 @@ public class GhostCoach : MonoBehaviour {
     public CoachGhost coach_ghost;
     public PathGuide path_guide;
     public HandVisuals hand_visuals;
+    public BallFeeder ball_feeder;
     public Table table;
     public Phase phase = Phase.Coach;
     public MotionClip recorded_clip;     // As recorded (or the mock coach).
@@ -70,8 +71,13 @@ public class GhostCoach : MonoBehaviour {
         HandVisuals hands = g.AddComponent<HandVisuals>();
         hands.play = play;
 
+        BallFeeder feeder = g.AddComponent<BallFeeder>();
+        feeder.play = play;
+        feeder.table = table;
+
         GhostCoach coach = g.AddComponent<GhostCoach>();
         coach.hand_visuals = hands;
+        coach.ball_feeder = feeder;
         coach.play = play;
         coach.recorder = recorder;
         coach.coach_ghost = ghost;

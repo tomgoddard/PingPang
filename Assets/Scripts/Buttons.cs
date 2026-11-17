@@ -16,6 +16,7 @@ public class Buttons : MonoBehaviour {
     public SettingsUI settings_ui;
 
     bool adjusting_grip;
+    public bool move_table_mode, adjust_grip_mode;   // Which button mode the settings menu has on.
     bool moving_table;
     Vector3 last_table_move_position;
     Quaternion last_table_move_rotation;
@@ -68,6 +69,8 @@ public class Buttons : MonoBehaviour {
     }
 
     public void OnRobotServe() {
+	if (!ButtonDedup.accept("RobotServe"))
+	    return;
 	if (play.settings.auto_serve.isOn)
 	{
 	    // Start or pause auto serve.
@@ -81,6 +84,8 @@ public class Buttons : MonoBehaviour {
     }
 
     public void OnHoldBall() {
+	if (!ButtonDedup.accept("HoldBall"))
+	    return;
 	if (!play.free_hand.holding_ball ())
             if (play.playing_game && !play.player_serves ())
                 play.robot.serve ();
@@ -89,6 +94,8 @@ public class Buttons : MonoBehaviour {
     }
 
     public void OnShowSettings() {
+	if (!ButtonDedup.accept("ShowSettings"))
+	    return;
         settings_ui.show_ui(! settings_ui.shown());
     }
 
@@ -120,6 +127,7 @@ public class Buttons : MonoBehaviour {
     
     public void enable_move_table(bool enable)
     {
+	move_table_mode = enable;
 	// Activate action map (ie controller button bindings) for adjusting grip.
 	string action_map = (enable ? "MoveTableActions" : "PlayActions");
 	PlayerInput player_input = GetComponent<PlayerInput>();
@@ -128,11 +136,15 @@ public class Buttons : MonoBehaviour {
 	  moving_table = false;
     }
     public void OnMoveTableStart() {
+	if (!ButtonDedup.accept("MoveTableStart"))
+	    return;
 	moving_table = true;
 	last_table_move_position = play.paddle_hand.wand.position();
 	last_table_move_rotation = play.paddle_hand.wand.rotation();
     }
     public void OnMoveTableEnd() {
+	if (!ButtonDedup.accept("MoveTableEnd"))
+	    return;
 	moving_table = false;
     }
     void move_table() {
@@ -166,15 +178,20 @@ public class Buttons : MonoBehaviour {
     
     public void enable_adjust_grip(bool enable)
     {
+	adjust_grip_mode = enable;
 	// Activate action map (ie controller button bindings) for adjusting grip.
 	string action_map = (enable ? "AdjustGripActions" : "PlayActions");
 	PlayerInput player_input = GetComponent<PlayerInput>();
 	player_input.SwitchCurrentActionMap(action_map);
     }
     public void OnAdjustGripStart() {
+	if (!ButtonDedup.accept("AdjustGripStart"))
+	    return;
 	adjusting_grip = true;
     }
     public void OnAdjustGripEnd() {
+	if (!ButtonDedup.accept("AdjustGripEnd"))
+	    return;
 	adjusting_grip = false;
     }
 

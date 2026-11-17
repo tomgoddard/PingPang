@@ -1,4 +1,4 @@
-﻿using System;  // use IntPtr
+using System;  // use IntPtr
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +27,8 @@ public class Play : MonoBehaviour {
     public Camera passthrough_camera;   // Used to hide skybox with pass-through video
     public PathTracer path_tracer;
     int track_countdown;
+    public bool robot_active = true;                 // Off while the player only watches the coach (GhostCoach).
+    public System.Action<Ball> player_paddle_hit;  // GhostCoach recording and scoring.
     
     Play() {
         create_play_states ();
@@ -136,6 +138,8 @@ public class Play : MonoBehaviour {
             float return_time = (s == null ? 0f : s.contact_time - b.motion.time);
             report_speeds (b, bn, return_time);
             enable_markers();
+            if (player_paddle_hit != null)
+                player_paddle_hit(b);
 //	    report_imu_state();  // Only for SteamVR
         }
         if (bn.tag == "robot_paddle") {
@@ -151,6 +155,8 @@ public class Play : MonoBehaviour {
     }
 
     Stroke return_ball(Ball b) {
+        if (!robot_active)
+            return null;
 
         bool player_serve = (play_state != null &&
                           play_state.name == "player serve paddle");
@@ -194,6 +200,12 @@ public class Play : MonoBehaviour {
         ball_in_play = ball;
 	record_tracks(true);
         return ball;
+    }
+
+    public void start_ball_feed(Ball ball) {
+        play_state = null;
+        ball_in_play = ball;
+        record_tracks(true);
     }
 
     public void start_game() {

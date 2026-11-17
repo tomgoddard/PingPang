@@ -617,6 +617,8 @@ public class Robot : MonoBehaviour {
     }
 
     public void serve() {
+        if (!play.robot_active)
+            return;
         new_rally();
         Serve s;
 	if (repeated_serve >= serve_repeat_count || cur_serve == null)

@@ -40,6 +40,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GhostTogglePhase",
+                    "type": "Button",
+                    "id": "5fe48b83-494c-4de6-b3f5-dba09ff31718",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GhostRecord",
+                    "type": "Button",
+                    "id": "5916f4ca-e4cd-4e55-81da-f4b2d9b5cb5f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GhostSpeed",
+                    "type": "Button",
+                    "id": "487adf54-4e7d-4c8a-afa8-d96a91170c7c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GhostNewSession",
+                    "type": "Button",
+                    "id": "6f2d4ab4-e3a6-4f2e-8559-d1b9fadaca95",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GhostToggleHands",
+                    "type": "Button",
+                    "id": "9af2b7dd-515f-4025-9ab2-4f2f9e4ca2ae",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -106,6 +151,61 @@
                     "processors": "",
                     "groups": ";PlayControls",
                     "action": "ShowSettings",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33ad04a1-5618-47e9-91f5-9b9c46d5be35",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "GhostTogglePhase",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d75b9b04-a69b-41b2-a963-6ae37f01b7a3",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "GhostRecord",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1302aa24-56ca-4d35-8825-8723c3007aed",
+                    "path": "<XRController>{RightHand}/thumbstickClicked",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "GhostSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7df65e3-1108-4393-88a0-b7ea43767a8f",
+                    "path": "<XRController>{LeftHand}/thumbstickClicked",
+                    "interactions": "Hold(duration=1.5)",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "GhostNewSession",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "064b9793-535f-4ff8-8e55-593abfbb5c0b",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PlayControls",
+                    "action": "GhostToggleHands",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

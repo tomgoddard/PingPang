@@ -14,7 +14,7 @@ public class BallFeeder : MonoBehaviour {
     public float feed_speed = 4.2f;        // Horizontal speed (m/s).
     public float feed_topspin = 1.0f;      // Mild topspin (m/s at ball surface).
 
-    // Coordinates relative to TableSpace.center(table, out top_y) (y relative to top_y).
+    // Coordinates relative to the full table center (at the net; y relative to top_y).
     public Vector3 spawn_offset = new Vector3(0.0f, 0.35f, 1.45f);
     public Vector3 far_bounce_offset = new Vector3(0.18f, 0.0f, 0.65f);
 
@@ -90,12 +90,17 @@ public class BallFeeder : MonoBehaviour {
 
         float top_y;
         Vector3 center = TableSpace.center(table, out top_y);
-        Vector3 spawn = new Vector3(center.x + spawn_offset.x,
-                                    top_y + spawn_offset.y,
-                                    center.z + spawn_offset.z);
-        Vector3 far_bounce = new Vector3(center.x + far_bounce_offset.x,
-                                         top_y + b.radius + far_bounce_offset.y,
-                                         center.z + far_bounce_offset.z);
+        // TableSpace.center() returns the center of table_top (the near half);
+        // shift to the middle of the full table (the net) so far_bounce lands on the far half.
+        center.z += 0.5f * table.table_top.transform.lossyScale.z;
+        Vector3 spawn = TableSpace.to_world(table.transform,
+                                            new Vector3(center.x + spawn_offset.x,
+                                                        top_y + spawn_offset.y,
+                                                        center.z + spawn_offset.z));
+        Vector3 far_bounce = TableSpace.to_world(table.transform,
+                                                 new Vector3(center.x + far_bounce_offset.x,
+                                                             top_y + b.radius + far_bounce_offset.y,
+                                                             center.z + far_bounce_offset.z));
 
         Vector3 line = far_bounce - spawn;
         Vector3 plane_move = new Vector3(line.x, 0f, line.z);
